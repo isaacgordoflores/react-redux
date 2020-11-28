@@ -6,19 +6,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         height: 60,
         justifyContent: 'center',
-        borderBottomColor: '#eee'
+        borderBottomColor: '#eee',
     },
     text: {
         fontSize: 20,
     },
+    strike : {
+        textDecorationLine: 'line-through',
+        textDecorationStyle: 'solid',
+    },  
 })
 
-export default({ desc, onPress }) => {
+export default({ desc, onPress, completed }) => {
     return(
         <TouchableOpacity onPress={onPress} style={styles.container}>
-            <Text style={styles.text}>
-                {desc}
-            </Text>
+            {completed ? 
+                <Text style={[styles.text, styles.strike]}>
+                    {desc}
+                </Text>
+                :
+                <Text style={styles.text}>
+                    {desc}
+                </Text>
+            }
         </TouchableOpacity>
     )
 }
