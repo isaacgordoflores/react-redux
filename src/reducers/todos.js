@@ -4,10 +4,20 @@ const initialState = [
 ]
 
 const COMPLETE = 'COMPLETE' 
+const SUBMIT = 'SUBMIT'
 
 export const complete = id => ({
     type: COMPLETE,
     payload: id,
+})
+
+export const submit = text => ({
+    type: SUBMIT,
+    payload: {
+        id: Math.random().toString(36),
+        desc: text,
+        completed: false,
+    },
 })
 
 
@@ -22,6 +32,10 @@ export default (state = initialState, action) => {
              * Si son los mismos, creo una copia del objeto x (...x) y le cambio la propiedad completed
              * A la anterior (anterior a ser clicado)
              */
+        case SUBMIT: {
+            return [action.payload].concat(state);
+        }
+            
         default:
             return state
     }
