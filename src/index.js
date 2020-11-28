@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
+import  { connect } from 'react-redux';
 import ListItem from './components/ListItem';
 
 const styles = StyleSheet.create({
@@ -15,12 +16,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const data = [
-  { id: 1, desc: 'Texto de Prueba', completed: false },
-  { id: 2, desc: 'Otro Texto de Prueba @ á <>', completed: false},
-]
-
-export default () => {
+const App = ({ data }) => {
     return (
       <View style={styles.container}>
         <FlatList
@@ -33,7 +29,12 @@ export default () => {
         />
       </View>
     )
-  }
+}
 
+const mapStateToProps = state => { // se necarga de obtener los datos del estado
+    console.log('state', state);
+    return { data: state.todos }
+}
+export default connect(mapStateToProps)(App)
 
   
