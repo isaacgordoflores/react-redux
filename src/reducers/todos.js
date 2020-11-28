@@ -12,6 +12,19 @@ export const complete = id => ({
 
 
 export default (state = initialState, action) => {
-    console.log(action)
+
+    switch(action.type){
+        case COMPLETE:
+            return state.map(x => x.id === action.payload ? ({ ...x, completed: !x.completed}) : x)
+            /**
+             * Con state.map() creo un array nuevo
+             * Entonces comparo los id que tengo con el que viene dentro de payload
+             * Si son los mismos, creo una copia del objeto x (...x) y le cambio la propiedad completed
+             * A la anterior (anterior a ser clicado)
+             */
+        default:
+            return state
+    }
+
     return state
 }

@@ -25,7 +25,7 @@ const App = ({ data, complete }) => {
           data={data}
           keyExtractor={x => String(x.id)}
           renderItem={({ item }) => 
-            <ListItem onPress={() => complete(item.id)} desc={item.desc} />
+            <ListItem completed={item.completed} onPress={() => complete(item.id)} desc={item.desc} />
           }
         />
       </View>
