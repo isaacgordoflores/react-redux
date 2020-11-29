@@ -3,8 +3,13 @@ const initialState = [
     { id: 2, desc: 'toDo 2', completed: false },
 ]
 
+/**
+ * Tipos ¿?
+ */
 const COMPLETE = 'COMPLETE' 
 const SUBMIT = 'SUBMIT'
+const START_SUBMIT = 'START_SUBMIT'
+const ERROR_SUBMIT = 'ERROR_SUBMIT'
 
 export const complete = id => ({
     type: COMPLETE,
@@ -20,6 +25,14 @@ export const submit = text => ({
     },
 })
 
+export const startSubmit = () => ({
+    type: START_SUBMIT, // Ver linea 8
+})
+
+export const errorSubmit = () => ({
+    type: ERROR_SUBMIT, // Ver linea 9
+    error,
+})
 
 export default (state = initialState, action) => {
 
@@ -39,6 +52,24 @@ export default (state = initialState, action) => {
         default:
             return state
     }
+}
 
-    return state
+export const saveTodo = text => async (dispatch, getState) => { // Obtengo el estado completo de la aplicacion con dispatch y getState
+    dispatch(startSubmit()) // despacho la accion que indica el inicio de la accion (declarada en linea 23)
+
+    const state = getState()
+    console.log(state);
+
+    /**
+     * Intento ejecutar con try esta porcion de codigo entre {} de lo contrario se ejecuta catch
+     */ 
+    try {
+        // Llamada a la API
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+        
+        dispatch(submit()) // Despacha la accion text en caso de éxito de la petición
+
+    } catch(e) {
+        dispatch(errorSubmit(e))
+    }
 }
